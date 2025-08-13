@@ -5,6 +5,8 @@
   </div>
   <div class="zhengfangx">
     <div class="zhengfangx1"></div>
+    <p id="p1"> 123</p>
+
 
   </div>
 </template>
@@ -59,8 +61,12 @@ const obj = {
 }
 function yu(greet: string) {
 
-  console.log(greet, obj.name);
+  console.log(greet, this.name);
 }
+yu.prototype.say = function () {
+  console.log("hello");
+}
+yu.say()
 yu.call(obj, "hello")
 const bind = yu.bind(obj)
 bind("hello")
@@ -68,9 +74,9 @@ bind("hello")
 yu.apply(obj, ["hello"])
 console.log(11);
 
-yu.prototype.say = function () {
-  console.log("hello");
-}
+
+
+
 screen.width
 screen.height
 console.log(screen.width, screen.height);
@@ -86,7 +92,8 @@ const p = new Promise((resolve) => {
 
 })
 
-
+const p1 = window.document.getElementById("p1")
+console.log("p1",p1);
 
 
 function createBatchFetch(batchFn, wait = 50) {
@@ -141,14 +148,73 @@ batchFetchUsers(1).then(console.log); // { id: 1, name: "User1" }
 batchFetchUsers(2).then(console.log); // { id: 2, name: "User2" }
 batchFetchUsers(3).then(console.log); // { id: 3, name: "User3" }
 
+class Person{
+  name:string
+  age:number
+  constructor(name:string,age:number){
+    this.name = name
+    this.age = age
+  }
+  say(){
+    console.log("hello");
+  }
+}
+Person.prototype.sayHello = function(){
+  console.log("hello4546465",this.name);
+}
 
+const p5 = new Person("zhangsan",18)
 
-
+document.cookie = "name=zhangsan; path=/; max-age=10; Secure; SameSite=Lax";
 
 
 onMounted(() => {
 
+const p2 = window.document.getElementById("p1")
+console.log("p2",p2)
+if(p2){
+  p2.addEventListener("click",()=>{
+    console.log("点击了p1");
+  })
+}
 })
+
+onUnmounted(()=>{
+  const p2 = window.document.getElementById("p1")
+if(p2){
+  p2.removeEventListener("click",()=>{
+    console.log("点击了p1");
+  })
+}
+})
+
+const p3 =  {
+  value:100,
+  add: function add(){
+    this.value++
+    return this
+  }
+}
+p3.value = 1000
+
+console.log("p3",p3.add().add().value);
+
+
+function makeCounter() {
+  let count = 0;
+  return function() {
+    count++;
+    return count;
+  }
+}
+
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+
+
+
+
 </script>
 <style scoped>
 .triangle {
